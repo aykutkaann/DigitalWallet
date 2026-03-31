@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/DigitalWallet.Api/DigitalWallet.Api.csproj" />
+    <Project Path="src/DigitalWallet.Application/DigitalWallet.Application.csproj" />
+    <Project Path="src/DigitalWallet.Domain/DigitalWallet.Domain.csproj" />
+    <Project Path="src/DigitalWallet.Infrastructure/DigitalWallet.Infrastructure.csproj" />
+    <Project Path="src/DigitalWallet.Worker/DigitalWallet.Worker.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DigitalWallet.IntegrationTests/DigitalWallet.IntegrationTests.csproj" />
+    <Project Path="tests/DigitalWallet.UnitTests/DigitalWallet.UnitTests.csproj" />
+  </Folder>
+</Solution>
