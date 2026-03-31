@@ -31,7 +31,7 @@ namespace DigitalWallet.Infrastructure.Persistence.Configurations
 
 
             builder.HasOne(r => r.ReceiverWallet)
-                .WithMany(w => w.ReceiveTransfers)
+                .WithMany(w => w.ReceivedTransfers)
                 .HasForeignKey(r => r.ReceiverWalletId)
                 .OnDelete(DeleteBehavior.Restrict);
 
