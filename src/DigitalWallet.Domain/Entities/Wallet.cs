@@ -21,6 +21,17 @@ namespace DigitalWallet.Domain.Entities
         public ICollection<TransferRequest> SentTransfers { get; private set; } = new HashSet<TransferRequest>();
         public ICollection<TransferRequest> ReceivedTransfers { get; private set; } = new HashSet<TransferRequest>();
 
+        private Wallet() { }
+
+        public Wallet(Guid userId, string currency)
+        {
+            Id = Guid.NewGuid();
+            UserId = userId;
+            Balance = 0;
+            Currency = currency;
+            CreatedAt = DateTime.UtcNow;
+            
+        }
 
     }
 }
