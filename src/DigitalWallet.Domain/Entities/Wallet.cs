@@ -18,5 +18,9 @@ namespace DigitalWallet.Domain.Entities
 
         public ICollection<Transaction> Transactions { get; private set; } = new HashSet<Transaction>();
 
+        public ICollection<TransferRequest> SentTransfers { get; private set; } = new HashSet<TransferRequest>();
+        public ICollection<TransferRequest> ReceivedTransfers { get; private set; } = new HashSet<TransferRequest>();
+
+
     }
 }
