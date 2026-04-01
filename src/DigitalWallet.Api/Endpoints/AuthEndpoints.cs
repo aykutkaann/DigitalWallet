@@ -8,7 +8,7 @@ namespace DigitalWallet.Api.Endpoints
 
         public static void MapAuthEndpoints(this IEndpointRouteBuilder routes)
         {
-            var group = routes.MapGroup("/api/auth");
+            var group = routes.MapGroup("/api/auth").WithTags("Auths");
 
             group.MapPost("/register", async(RegisterRequest request, IAuthService service, CancellationToken cancellationToken) =>
             {

@@ -32,6 +32,13 @@ namespace DigitalWallet.Domain.Entities
             CreatedAt = DateTime.UtcNow;
             
         }
+        public void Credit(decimal amount)
+        {
+            if (amount <= 0) throw new ArgumentException("Amount must be greater than 0.");
+
+            Balance += amount;
+            UpdatedAt = DateTime.UtcNow;
+        }
 
     }
 }

@@ -16,6 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddEndpointsApiExplorer();
+
+//JWT bearer
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -42,6 +44,8 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+
+//DbContext
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -79,12 +83,19 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+builder.Services.AddScoped<IWalletService, WalletService>();
+
 
 //Repositrories
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IWalletRepository, WalletRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+
+
+builder.Services.AddHttpContextAccessor();  
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+
 
 var app = builder.Build();
 
@@ -106,6 +117,8 @@ app.UseAuthorization();
 app.MapGet("/health", () => "API is running").RequireAuthorization();
 
 app.MapAuthEndpoints();
+
+app.MapWalletEndpoints();
 
 
 
