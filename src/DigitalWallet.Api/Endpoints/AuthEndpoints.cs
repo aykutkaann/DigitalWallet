@@ -1,4 +1,5 @@
-﻿using DigitalWallet.Application.DTOs.Auth;
+﻿using DigitalWallet.Api.Filters;
+using DigitalWallet.Application.DTOs.Auth;
 using DigitalWallet.Application.Services;
 
 namespace DigitalWallet.Api.Endpoints
@@ -26,7 +27,7 @@ namespace DigitalWallet.Api.Endpoints
                     return Results.BadRequest(new {message = err.Message});
                 }
 
-            });
+            }).AddEndpointFilter<ValidationFilter<RegisterRequest>>();
 
             group.MapPost("/login", async (LoginRequest request, IAuthService service, CancellationToken cancellationToken) =>
             {
@@ -39,7 +40,7 @@ namespace DigitalWallet.Api.Endpoints
                     return Results.Unauthorized();
                 }
 
-            });
+            }).AddEndpointFilter<ValidationFilter<RegisterRequest>>();
         }
     }
 }

@@ -2,10 +2,12 @@ using DigitalWallet.Api.Endpoints;
 using DigitalWallet.Application.Interfaces;
 using DigitalWallet.Application.Services;
 using DigitalWallet.Application.Settings;
+using DigitalWallet.Application.Validators;
 using DigitalWallet.Domain.Interfaces;
 using DigitalWallet.Infrastructure.Persistence;
 using DigitalWallet.Infrastructure.Persistence.Repositories;
 using DigitalWallet.Infrastructure.Security;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -84,7 +86,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 builder.Services.AddScoped<IWalletService, WalletService>();
-
+builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 //Repositrories
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -95,6 +97,9 @@ builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
 builder.Services.AddHttpContextAccessor();  
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+
+builder.Services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>();
 
 
 var app = builder.Build();
@@ -119,6 +124,8 @@ app.MapGet("/health", () => "API is running").RequireAuthorization();
 app.MapAuthEndpoints();
 
 app.MapWalletEndpoints();
+
+app.MapTransactionEndpoints();
 
 
 

@@ -1,4 +1,6 @@
-﻿using DigitalWallet.Application.DTOs.Wallet;
+﻿using DigitalWallet.Api.Filters;
+using DigitalWallet.Application.DTOs.Wallet;
+using DigitalWallet.Application.DTOs.Auth;
 using DigitalWallet.Application.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +40,7 @@ namespace DigitalWallet.Api.Endpoints
                     return Results.NotFound(new { message = err.Message });
                 }
 
-            }).WithName("Deposit");
+            }).WithName("Deposit").AddEndpointFilter<ValidationFilter<RegisterRequest>>();
         }
     }
 }
