@@ -40,5 +40,14 @@ namespace DigitalWallet.Domain.Entities
             UpdatedAt = DateTime.UtcNow;
         }
 
+        public void Debit(decimal amount)
+        {
+            if (amount <= 0) throw new ArgumentException("Amount must be greater than 0.");
+            if (Balance < amount) throw new InvalidOperationException("Insufficient balance.");
+
+            Balance -= amount;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
     }
 }

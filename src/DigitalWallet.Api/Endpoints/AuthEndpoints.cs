@@ -40,7 +40,7 @@ namespace DigitalWallet.Api.Endpoints
                     return Results.Unauthorized();
                 }
 
-            }).AddEndpointFilter<ValidationFilter<RegisterRequest>>();
+            }).AddEndpointFilter<ValidationFilter<LoginRequest>>();
         }
     }
 }

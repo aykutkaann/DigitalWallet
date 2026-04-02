@@ -40,7 +40,7 @@ namespace DigitalWallet.Api.Endpoints
                     return Results.NotFound(new { message = err.Message });
                 }
 
-            }).WithName("Deposit").AddEndpointFilter<ValidationFilter<RegisterRequest>>();
+            }).WithName("Deposit").AddEndpointFilter<ValidationFilter<DepositRequest>>();
         }
     }
 }

@@ -8,6 +8,7 @@ using DigitalWallet.Infrastructure.Persistence;
 using DigitalWallet.Infrastructure.Persistence.Repositories;
 using DigitalWallet.Infrastructure.Security;
 using FluentValidation;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -82,6 +83,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 
+// MassTransit + RabbitMQ — API only publishes messages, does not consume
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("localhost", "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+    });
+});
+
+builder.Services.AddScoped<ITransferService, TransferService>();
+builder.Services.AddScoped<ITransferRequestRepository, TransferRequestRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
@@ -126,6 +142,8 @@ app.MapAuthEndpoints();
 app.MapWalletEndpoints();
 
 app.MapTransactionEndpoints();
+
+app.MapTransferEndpoints();
 
 
 
