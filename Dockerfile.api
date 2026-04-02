@@ -1,0 +1,25 @@
+# Stage 1: Base
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
+WORKDIR /app
+EXPOSE 8080
+
+# Stage 2: Build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+COPY ["src/DigitalWallet.Api/DigitalWallet.Api.csproj", "src/DigitalWallet.Api/"]
+COPY ["src/DigitalWallet.Application/DigitalWallet.Application.csproj", "src/DigitalWallet.Application/"]
+COPY ["src/DigitalWallet.Domain/DigitalWallet.Domain.csproj", "src/DigitalWallet.Domain/"]
+COPY ["src/DigitalWallet.Infrastructure/DigitalWallet.Infrastructure.csproj", "src/DigitalWallet.Infrastructure/"]
+
+RUN dotnet restore "src/DigitalWallet.Api/DigitalWallet.Api.csproj"
+
+COPY . .
+WORKDIR "/src/src/DigitalWallet.Api"
+RUN dotnet publish "DigitalWallet.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+# Stage 3: Final
+FROM base AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "DigitalWallet.Api.dll"]
