@@ -1,4 +1,5 @@
 using DigitalWallet.Api.Endpoints;
+using DigitalWallet.Api.Middleware;
 using DigitalWallet.Application.Interfaces;
 using DigitalWallet.Application.Services;
 using DigitalWallet.Application.Settings;
@@ -121,6 +122,8 @@ builder.Services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>()
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 
 if (app.Environment.IsDevelopment())
